@@ -5,7 +5,6 @@ class UsersController < ApplicationController
     before_action :authorized, only: [:persist]
 
     def persist
-        byebug
         codeword = encode_token({user_id: @user.id})
         render json: { user: UserSerializer.new(@user), token: codeword}
     end 
@@ -15,7 +14,6 @@ class UsersController < ApplicationController
 
         if @user.valid?
             codeword = encode_token({user_id: @user.id})
-            # render json: @user, status: 201
             render json: { user: UserSerializer.new(@user), token: codeword }, status: 201
         else 
             render json: {error: "nice try bub"}, status: 401
